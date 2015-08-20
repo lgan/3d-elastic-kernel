@@ -70,9 +70,10 @@ extern "C" void rtm_gpu_init(int ny, int nz, int nx)
      	cudaError_t err;
 
 	//Set Device 
-    	cuda_ret = cudaSetDevice(0);
+    	cuda_ret = cudaSetDevice(1);
 	if(cuda_ret != cudaSuccess){
 		fprintf(stderr, "Failed to Set The cuda Device !\n");
+		exit(0);
 	}
 	else{
 		fprintf(stderr, "GPU Device Set ====> OK\n");
@@ -127,6 +128,7 @@ extern "C" void rtm_gpu_init(int ny, int nz, int nx)
 	err = cudaGetLastError();
 	if(cudaSuccess != err){
 		fprintf(stderr, "Cuda error6: %s.\n", cudaGetErrorString(err));
+		exit(0);
 	}else{	
 		fprintf(stderr,"GPU Data Init ====> OK\n");
 	}
@@ -188,6 +190,8 @@ extern "C" void rtm_gpu_copy_in(int ny, int nz, int nx,
 	err = cudaGetLastError();
 	if(cudaSuccess != err){
 		fprintf(stderr, "Cuda error2: %s.\n", cudaGetErrorString(err));
+		exit(0);
+		
 	}else{
 		fprintf(stderr,"Data Copy To GPU  ====> OK\n");
 	}
@@ -214,6 +218,7 @@ extern "C" void rtm_gpu_copy_out(int ny, int nz, int nx,
 	err = cudaGetLastError();
 	if(cudaSuccess != err){
 		fprintf(stderr, "Cuda error3: %s.\n", cudaGetErrorString(err));
+		exit(0);
 	}else{
 	fprintf(stderr,"Data Copy To CPU ====> OK\n");
 	}
@@ -272,6 +277,7 @@ extern "C" void rtm_gpu_final()
 
 	if(cudaSuccess != err){
 		fprintf(stderr, "Cuda error4: %s.\n", cudaGetErrorString(err));
+		exit(0);
 	}else{
 	fprintf(stderr,"GPU Mem Released ====> OK\n");
 	}
@@ -740,6 +746,7 @@ extern "C" void rtm_gpu_func(int ny, int nz, int nx,
 	err = cudaGetLastError();
 	if(cudaSuccess != err){
 		fprintf(stderr, "Cuda error5: %s.\n", cudaGetErrorString(err));
+		exit(0);
 	}	
 	
 	//RTM computing
@@ -766,6 +773,7 @@ extern "C" void rtm_gpu_func(int ny, int nz, int nx,
 		err = cudaGetLastError();
 		if(cudaSuccess != err){
 			fprintf(stderr, "Cuda error2: %s.\n", cudaGetErrorString(err));
+			exit(0);
 			}
 	
 		if(g_it<Steps_write_back-1)	rtm_gpu_change_pointer();	
